@@ -8,7 +8,7 @@ import {
   Publisher,
   Subscription,
   Root,
-  ResolverFilterData,
+  ResolverFilterData
 } from "type-graphql";
 
 import { Notification, NotificationPayload } from "./notification.type";
@@ -25,7 +25,7 @@ export class SampleResolver {
   @Mutation(returns => Boolean)
   async pubSubMutation(
     @PubSub() pubSub: PubSubEngine,
-    @Arg("message", { nullable: true }) message?: string,
+    @Arg("message", { nullable: true }) message?: string
   ): Promise<boolean> {
     const payload: NotificationPayload = { id: ++this.autoIncrement, message };
     await pubSub.publish("NOTIFICATIONS", payload);
@@ -35,24 +35,27 @@ export class SampleResolver {
   @Mutation(returns => Boolean)
   async publisherMutation(
     @PubSub("NOTIFICATIONS") publish: Publisher<NotificationPayload>,
-    @Arg("message", { nullable: true }) message?: string,
+    @Arg("message", { nullable: true }) message?: string
   ): Promise<boolean> {
     await publish({ id: ++this.autoIncrement, message });
     return true;
   }
 
   @Subscription({ topics: "NOTIFICATIONS" })
-  normalSubscription(@Root() { id, message }: NotificationPayload): Notification {
-console.log('=== sub connected');
+  normalSubscription(
+    @Root() { id, message }: NotificationPayload
+  ): Notification {
+    console.log("=== sub connected");
     return { id, message, date: new Date() };
   }
 
   @Subscription(returns => Notification, {
     topics: "NOTIFICATIONS",
-    filter: ({ payload }: ResolverFilterData<NotificationPayload>) => payload.id % 2 === 0,
+    filter: ({ payload }: ResolverFilterData<NotificationPayload>) =>
+      payload.id % 2 === 0
   })
   subscriptionWithFilter(@Root() { id, message }: NotificationPayload) {
-console.log('=== even sub');
+    console.log("=== even sub");
     const newNotification: Notification = { id, message, date: new Date() };
     return newNotification;
   }
@@ -63,7 +66,7 @@ console.log('=== even sub');
   async pubSubMutationToDynamicTopic(
     @PubSub() pubSub: PubSubEngine,
     @Arg("topic") topic: string,
-    @Arg("message", { nullable: true }) message?: string,
+    @Arg("message", { nullable: true }) message?: string
   ): Promise<boolean> {
     const payload: NotificationPayload = { id: ++this.autoIncrement, message };
     await pubSub.publish(topic, payload);
@@ -71,11 +74,11 @@ console.log('=== even sub');
   }
 
   @Subscription({
-    topics: ({ args }) => args.topic,
+    topics: ({ args }) => args.topic
   })
   subscriptionWithFilterToDynamicTopic(
     @Arg("topic") topic: string,
-    @Root() { id, message }: NotificationPayload,
+    @Root() { id, message }: NotificationPayload
   ): Notification {
     return { id, message, date: new Date() };
   }

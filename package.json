@@ -6,7 +6,8 @@
     "url": "https://github.com/MichalLytek"
   },
   "scripts": {
-    "start": "ts-node index"
+    "build": "tsc -p tsconfig.build.json",
+    "start": "ts-node src/index"
   },
   "dependencies": {
     "@types/glob": "^7.1.1",

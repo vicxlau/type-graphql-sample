@@ -7,13 +7,13 @@ import { SampleResolver } from "./resolver";
 async function bootstrap() {
   // Build the TypeGraphQL schema
   const schema = await buildSchema({
-    resolvers: [SampleResolver],
+    resolvers: [SampleResolver]
   });
 
   // Create GraphQL server
   const server = new ApolloServer({
     schema,
-    playground: true,
+    playground: true
     // you can pass the endpoint path for subscriptions
     // otherwise it will be the same as main graphql endpoint
     // subscriptions: "/subscriptions",
