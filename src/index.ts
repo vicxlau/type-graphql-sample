@@ -20,7 +20,7 @@ async function bootstrap() {
   });
 
   // Start the server
-  const { url } = await server.listen(4000);
+  const { url } = await server.listen(80);
   console.log(`Server is running, GraphQL Playground available at ${url}`);
 }
 
