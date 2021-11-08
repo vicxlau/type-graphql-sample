@@ -34,7 +34,7 @@
     "@types/rimraf": "^2.0.3",
     "apollo-cache-control": "^0.8.5",
     "apollo-engine": "^1.1.2",
-    "apollo-server": "^2.9.7",
+    "apollo-server": "^2.25.3",
     "apollo-server-express": "^2.9.7",
     "class-transformer": "^0.2.3",
     "del": "^5.1.0",
